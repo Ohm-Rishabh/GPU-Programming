@@ -15,7 +15,6 @@ using std::vector;
 __global__ void vectorAdd(int* a, int* b, int* c, int N) {
   int tid = (blockIdx.x * blockDim.x) + threadIdx.x;
   if (tid < N) {
-    // Each thread adds a single element
     c[tid] = a[tid] + b[tid];
   }
 }
