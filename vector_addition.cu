@@ -13,7 +13,7 @@ using std::generate;
 using std::vector;
 
 __global__ void vectorAdd(int* a, int* b, int* c, int N) {
-  int tid = (blockIdx.x * blockDim.x) + threadIdx.x;
+  int tid = (blk_id.x * blk_dim.x) + threadIdx.x;
   if (tid < N) {
     c[tid] = a[tid] + b[tid];
   }
@@ -47,9 +47,9 @@ int main() {
   cudaMemcpy(d_a, h_a, bytes, cudaMemcpyHostToDevice);
   cudaMemcpy(d_b, h_b, bytes, cudaMemcpyHostToDevice);
 
-  int NUM_THREADS = 1 << 10;
-  int NUM_BLOCKS = (N + NUM_THREADS - 1) / NUM_THREADS;
-  vectorAdd<<<NUM_BLOCKS, NUM_THREADS>>>(d_a, d_b, d_c, N);
+  int no_threads = 1 << 10;
+  int no_blk = (N + no_threads - 1) / no_threads;
+  vectorAdd<<<no_blk, no_threads>>>(d_a, d_b, d_c, N);
   cudaMemcpy(h_c, d_c, bytes, cudaMemcpyDeviceToHost);
 
   verify_result(h_a, h_b, h_c, N);
@@ -61,8 +61,6 @@ int main() {
   cudaFree(d_a);
   cudaFree(d_b);
   cudaFree(d_c);
-
-  cout << "COMPLETED SUCCESSFULLY\n";
 
   return 0;
 }
