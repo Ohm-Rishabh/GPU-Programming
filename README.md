@@ -8,4 +8,3 @@ List of all GPU Programming Projects
 
   i. Given a set of M cores and N tasks, as well as the time of execution T(i) and priorities, the turn-around time of each of the tasks is to be computed.
   
-  ii. Given a set of N trains and M classes, as well source, destination, capacity of each of the train, the task is to process B batches of requests, each containing R requests, where       all of them are passed as input.
